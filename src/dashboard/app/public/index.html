@@ -1,0 +1,182 @@
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css" rel="stylesheet">
+        <link href="assets/main.css" rel="stylesheet">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <h1>Métricas de usuarios de TELEFE.COM - Auth0</h1>
+            </div>
+        </div>
+
+
+    <div class="container-fluid">
+
+        <div class="row">
+<!--
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div id="auth0ChartLocations"></div>
+                    </div>
+                </div>
+            </div> 
+-->
+        <div class="row">
+            <!--
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h2 class="header">User's Income</h2> 
+                        <div id="auth0ChartIncome"></div>
+                    </div>
+                </div>
+            </div>
+-->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h2 class="header">Edad</h2>
+                        <div id="auth0ChartAge"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h2 class="header">Genero</h2>
+                        <div id="auth0ChartGender"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h2 class="header">Origen</h2>
+                        <div id="auth0ChartIdP"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h2 class="header">Sign ups</h2>
+                        <div id="auth0ChartSignups"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <a id="refresh" href="javascript:widget.refresh();" class="btn btn-info btn-fab btn-raised mdi-navigation-refresh"></a>
+
+
+        <script type="text/javascript">
+
+            window.addEventListener('a0-dashboard-init', function (e) {
+
+/*
+                var map = new Auth0MapWidget({
+                    name:'location',
+                    wrapper_selector:'auth0ChartLocations',
+                    map_styles:[{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e9e9e9"},{"lightness":17}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":21}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":21}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]}]
+                });
+                e.detail.widget.register(map);
+*/
+
+/*
+                var income = new Auth0IncomeWidget({
+                    wrapper_selector:'#auth0ChartIncome'
+                });
+                e.detail.widget.register(income);
+*/
+
+                var age = new Auth0BasicChartWidget({
+                    name:'age',
+                    grouping_field:'agebucket',
+                    selection_enabled: true,
+                    color_pattern:['#F39C12','#2ECC71','#3498DB','#9B59B6','#34495E','#F1C40F','#E67E22','#E74C3C', '#1ABC9C'],
+                    type: 'pie',
+                    data_processor: Auth0PieDataProcessor,
+                    wrapper_selector:'#auth0ChartAge'
+                });
+                e.detail.widget.register(age);
+               
+               
+                var signups = new Auth0TimeLineChartWidget({
+                    name:'created_at',
+                    grouping_field:'created_at',
+                    type: 'spline',
+                    data_processor: Auth0BarsDataProcessor,
+                    wrapper_selector:'#auth0ChartSignups'
+                });
+                e.detail.widget.register(signups);
+
+
+                var gender = new Auth0BasicChartWidget({
+                    name:'gender',
+                    grouping_field:'gender',
+                    selection_enabled: true,
+                    color_pattern:['#F39C12','#2ECC71','#3498DB','#9B59B6','#34495E','#F1C40F','#E67E22','#E74C3C', '#1ABC9C'],
+                    type: 'pie',
+                    data_processor: Auth0PieDataProcessor,
+                    wrapper_selector:'#auth0ChartGender'
+                });
+                e.detail.widget.register(gender);
+
+                var idp = new Auth0MultivalueChartWidget({
+                    name:'idp',
+                    grouping_field:'idp',
+                    selection_enabled: true,
+                    color_pattern:['#F39C12','#2ECC71','#3498DB','#9B59B6','#34495E','#F1C40F','#E67E22','#E74C3C', '#1ABC9C'],
+                    type: 'pie',
+                    data_processor: Auth0PieDataProcessor,
+                    wrapper_selector:'#auth0ChartIdP'
+                });
+                e.detail.widget.register(idp);
+
+            }, false);
+
+        </script>
+
+
+
+        <div id="loading">
+            <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
+
+        <script src="/js/auth0-dashboard-widget.js"></script>
+        
+        <script type="text/javascript">
+
+            var widget = new Auth0DasboardWidget('/dashboard_endpoint');
+
+            widget.on('loading', function(){
+                document.getElementById('loading').className = "visible";
+            });
+            widget.on('loaded', function(){
+                document.getElementById('loading').className = "";
+            });
+                        
+            $(window).load(function() {
+                widget.init();
+            });
+
+        </script>
+
+    </body>
+</html>

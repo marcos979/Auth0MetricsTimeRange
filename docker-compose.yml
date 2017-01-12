@@ -1,0 +1,32 @@
+version: '2'
+services:
+
+  dashboard:
+    build: ./src/dashboard
+    ports:
+      - "7020:7020"
+    environment:
+      - mongodb_connection_string=
+      - port=7020
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  dashboarddatacollect:
+    build: ./src/dashboardDataCollect    
+    environment:
+      - mongodb_connection_string=
+      - auth0_token=
+      - auth0_domain=
+      - cron_frequency=0 * * * * *      
+      - "TZ=UTC"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  mongodb:
+    build: ./src/mongodb
+    ports:
+      - "27017:27017"

@@ -1,0 +1,5 @@
+.vscode/launch.json
+src/dashboardDataCollect/node_modules/
+src/dashboard/node_modules/
+src/dashboardDataCollect/.vscode/launch.json
+src/dashboard/app/public/js/auth0-dashboard-widget.js.old
